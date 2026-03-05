@@ -52,6 +52,16 @@ git clone <your-repo> ~/.config/wezterm
 
 ### 首次配置
 
+**切换 Shell（Windows）**
+
+按 `F3` 可选择不同 Shell：
+
+- **PowerShell** - Windows 默认
+- **Git Bash** - 推荐用于包管理工具（npm/pip/opencode 等）
+- **CMD** - 传统命令提示符
+
+> 提示：某些工具（如 opencode）在 Git Bash 中更新更稳定
+
 **修改 WSL 配置**（如果使用 WSL）
 
 编辑 `config/domains.lua`：
@@ -84,7 +94,11 @@ ssh_domains = {
 
 **自定义背景**
 
-将图片放入 `backdrops/` 目录（支持 jpg/png/gif）
+将图片放入 `backdrops/` 目录（支持 jpg/png/gif），建议：
+
+- 数量：10-30 张
+- 单张大小：1-2MB
+- 总大小：20MB 以内
 
 ## 配置结构
 

@@ -7,7 +7,11 @@ local options = {
 
 if platform.is_win then
    options.default_prog = { 'powershell' }
-   options.launch_menu = {} -- 清空启动菜单
+   options.launch_menu = {
+      { label = 'PowerShell', args = { 'powershell' } },
+      { label = 'Git Bash', args = { 'C:\\Program Files\\Git\\bin\\bash.exe', '-l' } },
+      { label = 'CMD', args = { 'cmd' } },
+   }
 elseif platform.is_mac then
    options.default_prog = { '/opt/homebrew/bin/fish', '-l' }
    options.launch_menu = {
