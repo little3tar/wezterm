@@ -163,9 +163,12 @@ wezterm/
 
 ### F6 快捷命令
 
-- **Set Proxy (Windows)** - PowerShell 代理设置
-- **Set Proxy (Linux)** - Bash/Zsh 代理设置
-- **Agent Update** - 更新 AI CLI 工具（claude/opencode/codex/gemini）
+- **Set Proxy (Windows)** - PowerShell 临时代理设置
+   > `$env:http_proxy="http://127.0.0.1:2080"; $env:https_proxy="http://127.0.0.1:2080"`
+- **Set Proxy (Linux)** - Bash/Zsh 临时代理设置
+   > `export http_proxy=http://127.0.0.1:2080; export https_proxy=http://127.0.0.1:2080`
+- **Agent Update** - 更新 AI CLI 工具
+   > `claude update; opencode upgrade; npm upgrade -g @openai/codex; npm upgrade -g @google/gemini-cli`
 
 ## 使用技巧
 
