@@ -46,7 +46,7 @@ local keys = {
              elseif id == 'proxy-linux' then
                 pane:send_text('export http_proxy=http://127.0.0.1:2080; export https_proxy=http://127.0.0.1:2080\r')
              elseif id == 'agent' then
-                pane:send_text('claude update; opencode upgrade; npm upgrade -g @openai/codex; npm upgrade -g @google/gemini-cli\r')
+                pane:send_text('claude update; npm upgrade -g opencode-ai; npm upgrade -g @openai/codex; npm upgrade -g @google/gemini-cli\r')
              end
           end),
       }),
