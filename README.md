@@ -39,7 +39,7 @@
 # 从 https://github.com/wezterm/wezterm/releases 下载
 
 # 2. 安装字体（必需 Nerd Font 支持图标）
-# JetBrainsMono Nerd Font: https://github.com/ryanoasis/nerd-fonts/releases
+# JetBrainsMono Nerd Font (NL/No-Ligatures 变体): https://github.com/ryanoasis/nerd-fonts/releases
 # 鸿蒙黑体（可选，中文显示）
 
 # 3. 部署配置
@@ -52,18 +52,20 @@ git clone <your-repo> ~/.config/wezterm
 
 ### 首次配置
 
-**切换 Shell（Windows）**
+ **F3 启动器（Windows）**
 
-按 `F3` 可选择不同 Shell：
+按 `F3` 可打开启动器，选择不同 Shell 或 WSL 域：
 
 - **PowerShell** - Windows 默认
 - **Git Bash** - 推荐用于包管理工具（npm/pip/opencode 等）
 - **Anaconda PowerShell** - 已激活 conda base 环境的 PowerShell，适合 Python 开发
 - **CMD** - 传统命令提示符
+- **WSL:Ubuntu** - Ubuntu WSL 环境（如果已配置）
+- **WSL:Debian** - Debian WSL 环境（如果已配置）
 
-> 提示：某些工具（如 opencode）在 Git Bash 中更新更稳定。Anaconda PowerShell 会自动激活 conda base 环境。
+> 提示：某些工具（如 opencode）在 Git Bash 中更新更稳定。Anaconda PowerShell 会自动激活 conda base 环境。WSL 域需要在 `config/domains.lua` 中配置。
 
-**修改 WSL 配置**（如果使用 WSL）
+ **修改 WSL 配置**（如果使用 WSL）
 
 编辑 `config/domains.lua`：
 
@@ -76,8 +78,17 @@ wsl_domains = {
       default_cwd = '/home/your-username',
       default_prog = { 'bash', '-l' },  -- 或 'fish', 'zsh'
    },
+   {
+      name = 'WSL:Debian',
+      distribution = 'Debian',  -- Debian 发行版名称
+      username = 'your-debian-username',  -- Debian 中的用户名
+      default_cwd = '/home/your-debian-username',
+      default_prog = { 'bash', '-l' },
+   },
 },
 ```
+
+> 提示：要查找 WSL 发行版的确切名称，运行 `wsl -l -v`。Debian 通常显示为 "Debian"。
 
 **添加 SSH 连接**（可选）
 
@@ -149,6 +160,7 @@ wezterm/
 |            | `Alt+H/L`          | 切换标签页            |
 | **窗格**   | `Alt+\`            | 垂直分割              |
 |            | `Alt+Ctrl+\`       | 水平分割              |
+|            | `Alt+Z`            | 最大化/还原窗格       |
 |            | `Alt+Ctrl+H/J/K/L` | Vim 风格导航          |
 | **背景**   | `Alt+/`            | 随机切换              |
 |            | `Alt+,` / `Alt+.`  | 上一张/下一张         |
@@ -167,17 +179,17 @@ wezterm/
 - **Set Proxy (Windows)** - PowerShell 临时代理设置
    > `$env:http_proxy="http://127.0.0.1:2080"; $env:https_proxy="http://127.0.0.1:2080"`
 - **Set Proxy (Linux)** - Bash/Zsh 临时代理设置
-   > `export http_proxy=http://127.0.0.1:2080; export https_proxy=http://127.0.0.1:2080`
+   > `export HTTP_PROXY=http://127.0.0.1:2080; export HTTPS_PROXY=http://127.0.0.1:2080`
 - **Agent Update** - 更新 AI CLI 工具
-   > `claude update; opencode upgrade; npm upgrade -g @openai/codex; npm upgrade -g @google/gemini-cli`
+   > `claude update; npm upgrade -g opencode-ai; npm upgrade -g @openai/codex; npm upgrade -g @google/gemini-cli`
 
 ## 使用技巧
 
 ### 域（Domains）使用
 
-**访问 WSL**
+ **访问 WSL**
 
-- 按 `F3` → 选择 "WSL:Ubuntu"
+- 按 `F3` → 选择 "WSL:Ubuntu" 或 "WSL:Debian"（根据配置的 WSL 域）
 - 或在启动菜单中选择
 
 **连接 SSH**
@@ -186,12 +198,12 @@ wezterm/
 - 按 `F3` → 选择你的 SSH 服务器
 - 自动保持连接，像本地标签页一样使用
 
-**自动启动到 WSL**
+ **自动启动到 WSL**
 
-在 `config/domains.lua` 中取消注释：
+在 `config/domains.lua` 中取消注释并修改：
 
 ```lua
-default_gui_startup_args = { 'connect', 'WSL:Ubuntu' },
+default_gui_startup_args = { 'connect', 'WSL:Ubuntu' },  -- 或 'WSL:Debian'
 ```
 
 ### 背景管理
@@ -273,8 +285,8 @@ if platform.is_win then
    options.launch_menu = {
       { label = 'PowerShell', args = { 'powershell' } },
       { label = 'Git Bash', args = { 'C:\\Program Files\\Git\\bin\\bash.exe', '-l' } },
-      { label = 'Anaconda PowerShell', args = { 'powershell', '-ExecutionPolicy', 'ByPass', '-NoExit', '-Command', "& 'C:\\ProgramData\\miniconda3\\shell\\condabin\\conda-hook.ps1' ; conda activate 'C:\\ProgramData\\miniconda3'" } },
       { label = 'CMD', args = { 'cmd' } },
+      { label = 'Anaconda PowerShell', args = { 'powershell', '-ExecutionPolicy', 'ByPass', '-NoExit', '-Command', "& 'C:\\ProgramData\\miniconda3\\shell\\condabin\\conda-hook.ps1' ; conda activate 'C:\\ProgramData\\miniconda3'" } },
    }
 end
 ```

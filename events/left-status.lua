@@ -26,7 +26,7 @@ local _push = function(text, fg, bg)
 end
 
 M.setup = function()
-   wezterm.on('update-right-status', function(window, _pane)
+    wezterm.on('update-left-status', function(window, _pane)
       __cells__ = {}
 
       local name = window:active_key_table()

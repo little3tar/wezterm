@@ -88,10 +88,10 @@ local keys = {
    { key = 'w',          mods = mod.SUPER,     action = act.CloseCurrentTab({ confirm = false }) },
 
    -- tabs: navigation
-   { key = 'h',          mods = mod.SUPER,     action = act.ActivateTabRelative(-1) },
-   { key = 'l',          mods = mod.SUPER,     action = act.ActivateTabRelative(1) },
-   { key = 'h',          mods = mod.SUPER_REV, action = act.MoveTabRelative(-1) },
-   { key = 'l',          mods = mod.SUPER_REV, action = act.MoveTabRelative(1) },
+    { key = 'h',          mods = mod.SUPER,     action = act.ActivateTabRelative(-1) },
+    { key = 'l',          mods = mod.SUPER,     action = act.ActivateTabRelative(1) },
+    { key = 'h',          mods = mod.SUPER .. '|SHIFT', action = act.MoveTabRelative(-1) },
+    { key = 'l',          mods = mod.SUPER .. '|SHIFT', action = act.MoveTabRelative(1) },
 
    -- window --
    -- spawn windows
@@ -147,9 +147,8 @@ local keys = {
       action = act.SplitHorizontal({ domain = 'CurrentPaneDomain' }),
    },
 
-   -- panes: zoom+close pane
-   { key = 'Enter', mods = mod.SUPER,     action = act.TogglePaneZoomState },
-   { key = 'w',     mods = mod.SUPER,     action = act.CloseCurrentPane({ confirm = false }) },
+    -- panes: zoom pane
+    { key = 'z', mods = mod.SUPER, action = act.TogglePaneZoomState },
 
    -- panes: navigation
    { key = 'k',     mods = mod.SUPER_REV, action = act.ActivatePaneDirection('Up') },
@@ -179,7 +178,7 @@ local keys = {
       action = act.ActivateKeyTable({
          name = 'resize_font',
          one_shot = false,
-         timemout_miliseconds = 1000,
+          timeout_milliseconds = 1000,
       }),
    },
    -- resize panes
@@ -189,7 +188,7 @@ local keys = {
       action = act.ActivateKeyTable({
          name = 'resize_pane',
          one_shot = false,
-         timemout_miliseconds = 1000,
+         timeout_milliseconds = 1000,
       }),
    },
 }

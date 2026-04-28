@@ -104,7 +104,7 @@ M.setup = function()
       -- Unseen output alert
       if has_unseen_output then
          _push(bg, '#FFA066', { Intensity = 'Bold' }, ' ' .. GLYPH_CIRCLE)
-else
+      else
          _push(bg, '#00A066', { Intensity = 'Bold' }, ' ' .. GLYPH_CIRCLE)
       end
 

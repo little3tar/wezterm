@@ -33,8 +33,8 @@
 | `Alt+W` | 关闭当前标签页 |
 | `Alt+H` | 切换到左侧标签页 |
 | `Alt+L` | 切换到右侧标签页 |
-| `Alt+Ctrl+H` | 将当前标签页左移 |
-| `Alt+Ctrl+L` | 将当前标签页右移 |
+| `Alt+Shift+H` | 将当前标签页左移 |
+| `Alt+Shift+L` | 将当前标签页右移 |
 
 ## 窗格管理
 
@@ -47,8 +47,7 @@
 ### 窗格操作
 | 快捷键 | 功能 |
 |--------|------|
-| `Alt+Enter` | 最大化/还原当前窗格 |
-| `Alt+W` | 关闭当前窗格 |
+| `Alt+Z` | 最大化/还原当前窗格 |
 
 ### 窗格导航
 | 快捷键 | 功能 |
@@ -138,14 +137,14 @@
 
 2. **Set Proxy (Linux)** - 设置临时代理（Linux/macOS）
    ```bash
-   export http_proxy=http://127.0.0.1:2080
-   export https_proxy=http://127.0.0.1:2080
+   export HTTP_PROXY=http://127.0.0.1:2080
+   export HTTPS_PROXY=http://127.0.0.1:2080
    ```
 
 3. **Agent Update** - 更新 AI Agent CLI 工具
    ```bash
    claude update
-   opencode
+   npm upgrade -g opencode-ai
    npm upgrade -g @openai/codex
    npm upgrade -g @google/gemini-cli
    ```
