@@ -147,6 +147,8 @@ local keys = {
       action = act.SplitHorizontal({ domain = 'CurrentPaneDomain' }),
    },
 
+    -- panes: close pane
+    { key = 'x', mods = mod.SUPER_REV, action = act.CloseCurrentPane({ confirm = true }) },
     -- panes: zoom pane
     { key = 'z', mods = mod.SUPER, action = act.TogglePaneZoomState },
 

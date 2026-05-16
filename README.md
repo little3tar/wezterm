@@ -38,9 +38,10 @@
 # 1. 安装 WezTerm
 # 从 https://github.com/wezterm/wezterm/releases 下载
 
-# 2. 安装字体（必需 Nerd Font 支持图标）
-# JetBrainsMono Nerd Font (NL/No-Ligatures 变体): https://github.com/ryanoasis/nerd-fonts/releases
-# 鸿蒙黑体（可选，中文显示）
+# 2. 安装字体（建议 Nerd Font 支持图标）
+# Maple Mono NF CN：主字体，支持编程连字及中文优化（cv01-cv99, ss01-ss05）
+# 鸿蒙黑体：备用中文字体
+# 下载：https://github.com/subframe7536/maple-font/releases
 
 # 3. 部署配置
 # Windows
@@ -122,7 +123,7 @@ wezterm/
 │   ├── appearance.lua      # 外观（WebGPU/配色/背景/标签栏）
 │   ├── bindings.lua        # 快捷键（完全自定义）
 │   ├── domains.lua         # WSL/SSH/Unix 域
-│   ├── fonts.lua           # 字体（JetBrains Mono + 鸿蒙黑体）
+│   ├── fonts.lua           # 字体（Maple Mono NF CN + 鸿蒙黑体）
 │   ├── general.lua         # 通用（滚动/超链接/行为）
 │   └── launch.lua          # 启动（默认 shell/启动菜单）
 ├── events/              # 事件处理
@@ -160,6 +161,7 @@ wezterm/
 |            | `Alt+H/L`          | 切换标签页            |
 | **窗格**   | `Alt+\`            | 垂直分割              |
 |            | `Alt+Ctrl+\`       | 水平分割              |
+|            | `Alt+Ctrl+X`       | 关闭当前窗格          |
 |            | `Alt+Z`            | 最大化/还原窗格       |
 |            | `Alt+Ctrl+H/J/K/L` | Vim 风格导航          |
 | **背景**   | `Alt+/`            | 随机切换              |
@@ -258,6 +260,43 @@ font = wezterm.font_with_fallback({
 }),
 font_size = 12,
 ```
+
+**配置 Maple Mono 字体特性**
+
+Maple Mono 提供丰富的字符变体和连字选项，通过 `harfbuzz_features` 控制：
+
+```lua
+harfbuzz_features = {
+   -- 字符变体 (cv01-cv11, cv61-cv66)：美化单个字符渲染
+   'cv01',   -- 移除间隙
+   'cv02',   -- 替换 a
+   'cv03',   -- 替换 i
+   'cv05',   -- 替换 g
+   'cv64',   -- 替换左右箭头
+
+   -- 斜体变体 (cv31-cv44)：美化斜体字符渲染
+   'cv31',   -- 替换斜体 a
+   'cv38',   -- 替换斜体 g
+
+   -- 中文全角标点 (cv96-cv99)
+   'cv96',   -- 全角引号
+   'cv97',   -- 全角省略号
+   'cv98',   -- 全角破折号
+   'cv99',   -- 繁体标点
+
+   -- 样式集 (ss01-ss11)：预定义的美化风格组合
+   'ss01',   -- 分离的等号连字
+   'ss02',   -- 分离的比较符号连字
+   'ss03',   -- 任意的纯文本标签
+   'ss04',   -- 分离的多下划线连字
+   'ss05',   -- 回退细的转义符号
+
+   -- 其他
+   'zero',   -- 点 0（slashed zero）
+},
+```
+
+> 更多 Maple 特性参见 [Maple Font 文档](https://github.com/subframe7536/maple-font/blob/main/source/features.md)。
 
 ### 修改配色
 
