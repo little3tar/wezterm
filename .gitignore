@@ -3,7 +3,3 @@
 /lua.bat
 /lua_modules
 /.luarocks
-
-# 私有配置（含 SSH 地址、WSL 发行版名等）
-config/domains.lua
-*.local.lua

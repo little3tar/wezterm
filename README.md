@@ -34,16 +34,24 @@
 
 ### 安装
 
+#### 1. 安装 WezTerm
+
+从 [GitHub Releases](https://github.com/wezterm/wezterm/releases) 下载安装包。
+
+#### 2. 安装字体
+
+本配置使用以下字体，缺失会导致 Nerd Font 图标乱码、中文渲染异常：
+
+| 字体 | 用途 | 安装方式 |
+|------|------|---------|
+| **Maple Mono NF CN** | 主字体，编程连字 + Nerd Font 图标 + 中文优化 | `scoop bucket add nerd-fonts && scoop install Maple-Mono-NF-CN` |
+| **鸿蒙黑体** | 备用中文字体 | [华为开发者官网](https://developer.huawei.com/consumer/cn/design/resource-V1/) 下载安装 |
+
+> Maple Mono 的 harfbuzz 特性（`cv01-cv99`、`ss01-ss05` 等）详见 `config/fonts.lua`，完整文档见 [Maple Font 仓库](https://github.com/subframe7536/maple-font)。
+
+#### 3. 部署配置
+
 ```bash
-# 1. 安装 WezTerm
-# 从 https://github.com/wezterm/wezterm/releases 下载
-
-# 2. 安装字体（建议 Nerd Font 支持图标）
-# Maple Mono NF CN：主字体，支持编程连字及中文优化（cv01-cv99, ss01-ss05）
-# 鸿蒙黑体：备用中文字体
-# 下载：https://github.com/subframe7536/maple-font/releases
-
-# 3. 部署配置
 # Windows
 git clone <your-repo> %USERPROFILE%\.config\wezterm
 
@@ -61,39 +69,36 @@ git clone <your-repo> ~/.config/wezterm
 - **Git Bash** - 推荐用于包管理工具（npm/pip/opencode 等）
 - **Anaconda PowerShell** - 已激活 conda base 环境的 PowerShell，适合 Python 开发
 - **CMD** - 传统命令提示符
-- **WSL:Ubuntu** - Ubuntu WSL 环境（如果已配置）
-- **WSL:Debian** - Debian WSL 环境（如果已配置）
+- **WSL 域** - 在 `config/domains.lua` 中自行配置
 
-> 提示：某些工具（如 opencode）在 Git Bash 中更新更稳定。Anaconda PowerShell 会自动激活 conda base 环境。WSL 域需要在 `config/domains.lua` 中配置。
+> 提示：某些工具（如 opencode）在 Git Bash 中更新更稳定。Anaconda PowerShell 会自动激活 conda base 环境。`config/domains.lua` 需从 `domains.lua.example` 复制后自行填写，该文件不会被 git 追踪（见 `.gitignore`）。
 
  **修改 WSL 配置**（如果使用 WSL）
 
-编辑 `config/domains.lua`：
+从模板复制并编辑：
+
+```bash
+cp config/domains.lua.example config/domains.lua
+vim config/domains.lua
+```
 
 ```lua
 wsl_domains = {
    {
-      name = 'WSL:Ubuntu',
-      distribution = 'Ubuntu',  -- 你的 WSL 发行版名称
-      username = 'your-username',  -- wsl whoami
+      name = 'WSL:Ubuntu-XX.XX',
+      distribution = 'Ubuntu-XX.XX',  -- 你的 WSL 发行版名称（wsl -l -v 查看）
+      username = 'your-username',
       default_cwd = '/home/your-username',
-      default_prog = { 'bash', '-l' },  -- 或 'fish', 'zsh'
-   },
-   {
-      name = 'WSL:Debian',
-      distribution = 'Debian',  -- Debian 发行版名称
-      username = 'your-debian-username',  -- Debian 中的用户名
-      default_cwd = '/home/your-debian-username',
       default_prog = { 'bash', '-l' },
    },
 },
 ```
 
-> 提示：要查找 WSL 发行版的确切名称，运行 `wsl -l -v`。Debian 通常显示为 "Debian"。
+> `config/domains.lua` 被 `.gitignore` 排除，不会被 git 追踪，换机器需重新创建。
 
 **添加 SSH 连接**（可选）
 
-在 `config/domains.lua` 中添加：
+在 `config/domains.lua` 中添加（如未创建先从 `domains.lua.example` 复制）：
 
 ```lua
 ssh_domains = {
@@ -191,7 +196,7 @@ wezterm/
 
  **访问 WSL**
 
-- 按 `F3` → 选择 "WSL:Ubuntu" 或 "WSL:Debian"（根据配置的 WSL 域）
+- 按 `F3` → 选择你配置的 WSL 域（如 `WSL:Ubuntu-24.04`）
 - 或在启动菜单中选择
 
 **连接 SSH**
@@ -202,10 +207,10 @@ wezterm/
 
  **自动启动到 WSL**
 
-在 `config/domains.lua` 中取消注释并修改：
+在 `config/domains.lua` 中取消注释并修改为你的 WSL 域：
 
 ```lua
-default_gui_startup_args = { 'connect', 'WSL:Ubuntu' },  -- 或 'WSL:Debian'
+default_gui_startup_args = { 'connect', 'WSL:Ubuntu-XX.XX' },
 ```
 
 ### 背景管理
