@@ -7,9 +7,10 @@ local GLYPH_SEMI_CIRCLE_LEFT = nf.ple_left_half_circle_thick --[[ '' ]]
 local GLYPH_SEMI_CIRCLE_RIGHT = nf.ple_right_half_circle_thick --[[ '' ]]
 local GLYPH_KEY_TABLE = nf.md_table_key --[[ '󱏅' ]]
 local GLYPH_KEY = nf.md_key --[[ '󰌆' ]]
+local TAB_BAR_BG = 'rgba(24, 24, 37, 0.68)'
 
 local colors = {
-   glyph_semi_circle = { bg = 'rgba(0, 0, 0, 0.4)', fg = '#fab387' },
+   glyph_semi_circle = { bg = TAB_BAR_BG, fg = '#fab387' },
    text = { bg = '#fab387', fg = '#1c1b19' },
 }
 

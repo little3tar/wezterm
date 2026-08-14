@@ -22,7 +22,7 @@ return {
          source = { Color = colors.background },
          height = '100%',
          width = '100%',
-         opacity = 0.96,
+         opacity = 0.82,
       },
    },
 
@@ -48,6 +48,8 @@ return {
    window_close_confirmation = 'NeverPrompt',
    window_frame = {
       active_titlebar_bg = '#090909',
+      button_bg = 'rgba(0, 0, 0, 0)',
+      button_hover_bg = 'rgba(0, 0, 0, 0)',
       -- font = fonts.font,
       -- font_size = fonts.font_size,
    },

@@ -8,6 +8,7 @@ local GLYPH_SEMI_CIRCLE_LEFT = nf.ple_left_half_circle_thick --[[ '' ]]
 local GLYPH_SEMI_CIRCLE_RIGHT = nf.ple_right_half_circle_thick --[[ '' ]]
 local GLYPH_CIRCLE = nf.fa_circle --[[ '' ]]
 local GLYPH_ADMIN = nf.md_shield_half_full --[[ '󰞀' ]]
+local TAB_BAR_BG = 'rgba(24, 24, 37, 0.68)'
 
 local M = {}
 
@@ -97,7 +98,7 @@ M.setup = function()
       end
 
       -- Left semi-circle
-      _push('rgba(0, 0, 0, 0.4)', bg, { Intensity = 'Bold' }, GLYPH_SEMI_CIRCLE_LEFT)
+      _push(TAB_BAR_BG, bg, { Intensity = 'Bold' }, GLYPH_SEMI_CIRCLE_LEFT)
 
       -- Admin Icon
       if is_admin then
@@ -118,7 +119,7 @@ M.setup = function()
       _push(bg, fg, { Intensity = 'Bold' }, ' ')
 
       -- Right semi-circle
-      _push('rgba(0, 0, 0, 0.4)', bg, { Intensity = 'Bold' }, GLYPH_SEMI_CIRCLE_RIGHT)
+      _push(TAB_BAR_BG, bg, { Intensity = 'Bold' }, GLYPH_SEMI_CIRCLE_RIGHT)
 
       return __cells__
    end)

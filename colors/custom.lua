@@ -57,7 +57,7 @@ local colorscheme = {
       '#F2F2F2', -- white
    },
    tab_bar = {
-      background = 'rgba(0, 0, 0, 0.4)',
+      background = 'rgba(24, 24, 37, 0.68)',
       active_tab = {
          bg_color = mocha.surface2,
          fg_color = mocha.text,
@@ -71,11 +71,11 @@ local colorscheme = {
          fg_color = mocha.text,
       },
       new_tab = {
-         bg_color = mocha.base,
+         bg_color = 'rgba(24, 24, 37, 0.68)',
          fg_color = mocha.text,
       },
       new_tab_hover = {
-         bg_color = mocha.mantle,
+         bg_color = 'rgba(24, 24, 37, 0.68)',
          fg_color = mocha.text,
          italic = true,
       },

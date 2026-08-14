@@ -3,6 +3,7 @@ local umath = require('utils.math')
 
 local nf = wezterm.nerdfonts
 local M = {}
+local TAB_BAR_BG = 'rgba(24, 24, 37, 0.68)'
 
 local SEPARATOR_CHAR = nf.oct_dash .. ' '
 
@@ -33,11 +34,11 @@ local charging_icons = {
 
 local colors = {
    date_fg = '#fab387',
-   date_bg = 'rgba(0, 0, 0, 0.4)',
+   date_bg = TAB_BAR_BG,
    battery_fg = '#f9e2af',
-   battery_bg = 'rgba(0, 0, 0, 0.4)',
+   battery_bg = TAB_BAR_BG,
    separator_fg = '#74c7ec',
-   separator_bg = 'rgba(0, 0, 0, 0.4)',
+   separator_bg = TAB_BAR_BG,
 }
 
 local __cells__ = {} -- wezterm FormatItems (ref: https://wezfurlong.org/wezterm/config/lua/wezterm/format.html)
