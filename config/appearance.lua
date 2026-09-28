@@ -22,7 +22,7 @@ return {
          source = { Color = colors.background },
          height = '100%',
          width = '100%',
-         opacity = 0.82,
+         opacity = 0.88,
       },
    },
 
