@@ -6,6 +6,24 @@ local act = wezterm.action
 -- 个人代理端口（仅在本地使用）
 local PROXY_PORT = '2080'
 
+-- 生成设置代理的环境变量语句：unix 为 true 时用 bash/zsh 语法，否则用 PowerShell 语法
+local function proxy_env(unix)
+   local proxy = 'http://127.0.0.1:' .. PROXY_PORT
+   if unix then
+      return 'export http_proxy="' .. proxy .. '"; export HTTP_PROXY="$http_proxy"; export https_proxy="' .. proxy .. '"; export HTTPS_PROXY="$https_proxy"; export no_proxy="localhost,127.0.0.1,.local"; export NO_PROXY="$no_proxy"'
+   end
+   return '$env:http_proxy="' .. proxy .. '"; $env:HTTP_PROXY=$env:http_proxy; $env:https_proxy="' .. proxy .. '"; $env:HTTPS_PROXY=$env:https_proxy; $env:no_proxy="localhost,127.0.0.1"; $env:NO_PROXY=$env:no_proxy'
+end
+
+-- 当前窗格前台进程是 bash/zsh/fish/WSL 时返回 true；无法判断时按 Windows shell 处理
+local function is_unix_shell(pane)
+   local name = (pane:get_foreground_process_name() or ''):lower()
+   return name:find('bash') ~= nil
+      or name:find('zsh') ~= nil
+      or name:find('fish') ~= nil
+      or name:find('wsl') ~= nil
+end
+
 local mod = {}
 
 if platform.is_mac then
@@ -41,15 +59,17 @@ local keys = {
           choices = {
              { label = 'Set Proxy (Windows)', id = 'proxy-win' },
              { label = 'Set Proxy (Linux)', id = 'proxy-linux' },
-             { label = 'Agent Update', id = 'agent' },
+             { label = 'Set Proxy + dsh web', id = 'dsh-web' },
           },
           action = wezterm.action_callback(function(window, pane, id)
              if id == 'proxy-win' then
-                pane:send_text('$env:http_proxy="http://127.0.0.1:' .. PROXY_PORT .. '"; $env:HTTP_PROXY=$env:http_proxy; $env:https_proxy="http://127.0.0.1:' .. PROXY_PORT .. '"; $env:HTTPS_PROXY=$env:https_proxy; $env:no_proxy="localhost,127.0.0.1"; $env:NO_PROXY=$env:no_proxy\r')
+                pane:send_text(proxy_env(false) .. '\r')
              elseif id == 'proxy-linux' then
-                pane:send_text('export http_proxy="http://127.0.0.1:' .. PROXY_PORT .. '"; export HTTP_PROXY="$http_proxy"; export https_proxy="http://127.0.0.1:' .. PROXY_PORT .. '"; export HTTPS_PROXY="$https_proxy"; export no_proxy="localhost,127.0.0.1,.local"; export NO_PROXY="$no_proxy"\r')
-             elseif id == 'agent' then
-                pane:send_text('claude update\r') --npm upgrade -g opencode-ai; npm upgrade -g @openai/codex; npm upgrade -g @google/gemini-cli--
+                pane:send_text(proxy_env(true) .. '\r')
+             elseif id == 'dsh-web' then
+                -- 先按当前窗格环境设置代理，再用同一环境启动 dsh web
+                pane:send_text(proxy_env(is_unix_shell(pane)) .. '\r')
+                pane:send_text('dsh web\r')
              end
           end),
       }),

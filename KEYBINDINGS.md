@@ -149,13 +149,16 @@
    export HTTPS_PROXY=http://127.0.0.1:2080
    ```
 
-3. **Agent Update** - 更新 AI Agent CLI 工具
+3. **Set Proxy + dsh web** - 自动识别当前窗格环境（PowerShell 或 bash/WSL）设置临时代理，然后启动 `dsh web`
+
+   ```powershell
+   # PowerShell 窗格：设置大小写代理变量后执行 dsh web
+   $env:http_proxy="http://127.0.0.1:2080"; dsh web
+   ```
 
    ```bash
-   claude update
-   npm upgrade -g opencode-ai
-   npm upgrade -g @openai/codex
-   npm upgrade -g @google/gemini-cli
+   # bash/WSL 窗格：设置大小写代理变量后执行 dsh web
+   export http_proxy=http://127.0.0.1:2080; dsh web
    ```
 
 ## SSH 连接

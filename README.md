@@ -21,7 +21,7 @@
 - ⌨️ 完全自定义快捷键（禁用默认，从零构建）
 - 🎯 Leader 键模式（字体/窗格调整）
 - 🔗 智能 URL 提取（支持多种括号格式）
-- 🚀 F6 快捷命令菜单（代理/更新）
+- 🚀 F6 快捷命令菜单（代理/启动 dsh web）
 
 **架构**
 
@@ -163,7 +163,7 @@ wezterm/
 | ---------- | ------------------ | --------------------- |
 | **功能键** | `F2`               | 命令面板              |
 |            | `F3`               | 启动器（WSL/SSH）     |
-|            | `F6`               | 快捷命令（代理/Claude 更新） |
+|            | `F6`               | 快捷命令（代理/启动 dsh web） |
 | **标签页** | `Alt+Enter`        | 新建标签页            |
 |            | `Alt+W`            | 关闭标签页            |
 |            | `Alt+H/L`          | 切换标签页            |
@@ -188,7 +188,7 @@ wezterm/
 
 - **Set Proxy (Windows)** - 为当前 PowerShell 会话设置临时代理（含大小写变量与 `NO_PROXY`）。
 - **Set Proxy (Linux)** - 为当前 Bash/Zsh 会话设置临时代理（含大小写变量与 `NO_PROXY`）。
-- **Agent Update** - 执行 `claude update` 更新 Claude Code；其他 AI CLI 请按各自官方方式更新。
+- **Set Proxy + dsh web** - 先按当前窗格环境（PowerShell 或 bash/WSL）设置临时代理，再在该环境启动 `dsh web`。
 
 ## 使用技巧
 
