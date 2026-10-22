@@ -15,13 +15,21 @@ local function proxy_env(unix)
    return '$env:http_proxy="' .. proxy .. '"; $env:HTTP_PROXY=$env:http_proxy; $env:https_proxy="' .. proxy .. '"; $env:HTTPS_PROXY=$env:https_proxy; $env:no_proxy="localhost,127.0.0.1"; $env:NO_PROXY=$env:no_proxy'
 end
 
--- 当前窗格前台进程是 bash/zsh/fish/WSL 时返回 true；无法判断时按 Windows shell 处理
+-- 当前窗格需要 bash 语法时返回 true；无法判断时按 Windows shell 处理
 local function is_unix_shell(pane)
+   -- WSL 域里跑的是 Linux shell，且域内前台进程名取不到，按域名判断
+   local domain = (pane:get_domain_name() or ''):lower()
+   if domain:find('wsl', 1, true) then
+      return true
+   end
+   -- 前台是 ssh/docker 等时，实际接收输入的是远端 Linux shell
    local name = (pane:get_foreground_process_name() or ''):lower()
-   return name:find('bash') ~= nil
-      or name:find('zsh') ~= nil
-      or name:find('fish') ~= nil
-      or name:find('wsl') ~= nil
+   for _, pattern in ipairs({ 'bash', 'zsh', 'fish', 'wsl', 'ssh', 'docker', 'podman', 'kubectl' }) do
+      if name:find(pattern, 1, true) then
+         return true
+      end
+   end
+   return false
 end
 
 local mod = {}
@@ -57,19 +65,17 @@ local keys = {
       action = act.InputSelector({
          title = 'Quick Commands',
           choices = {
-             { label = 'Set Proxy (Windows)', id = 'proxy-win' },
-             { label = 'Set Proxy (Linux)', id = 'proxy-linux' },
+             { label = 'Set Proxy', id = 'proxy' },
              { label = 'Set Proxy + dsh web', id = 'dsh-web' },
           },
           action = wezterm.action_callback(function(window, pane, id)
-             if id == 'proxy-win' then
-                pane:send_text(proxy_env(false) .. '\r')
-             elseif id == 'proxy-linux' then
-                pane:send_text(proxy_env(true) .. '\r')
-             elseif id == 'dsh-web' then
-                -- 先按当前窗格环境设置代理，再用同一环境启动 dsh web
+             if id == 'proxy' or id == 'dsh-web' then
+                -- 按当前窗格环境自动选择 PowerShell / bash 语法
                 pane:send_text(proxy_env(is_unix_shell(pane)) .. '\r')
-                pane:send_text('dsh web\r')
+                -- dsh web 复用同一代理环境启动
+                if id == 'dsh-web' then
+                   pane:send_text('dsh web\r')
+                end
              end
           end),
       }),

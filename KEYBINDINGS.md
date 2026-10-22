@@ -135,21 +135,21 @@
 
 按 `F6` 打开快捷命令菜单，包含：
 
-1. **Set Proxy (Windows)** - 设置临时代理（Windows PowerShell）
+1. **Set Proxy** - 自动识别当前窗格环境并设置临时代理（判定规则：WSL 域或前台为 bash/zsh/fish/wsl/ssh/docker/podman/kubectl 时按 bash，其余按 PowerShell）
 
    ```powershell
+   # PowerShell 窗格
    $env:http_proxy="http://127.0.0.1:2080"
    $env:https_proxy="http://127.0.0.1:2080"
    ```
 
-2. **Set Proxy (Linux)** - 设置临时代理（Linux/macOS）
-
    ```bash
-   export HTTP_PROXY=http://127.0.0.1:2080
-   export HTTPS_PROXY=http://127.0.0.1:2080
+   # bash/WSL 窗格
+   export http_proxy=http://127.0.0.1:2080
+   export https_proxy=http://127.0.0.1:2080
    ```
 
-3. **Set Proxy + dsh web** - 自动识别当前窗格环境（PowerShell 或 bash/WSL）设置临时代理，然后启动 `dsh web`
+2. **Set Proxy + dsh web** - 先用同一套规则设置临时代理，然后启动 `dsh web`
 
    ```powershell
    # PowerShell 窗格：设置大小写代理变量后执行 dsh web

@@ -186,9 +186,8 @@ wezterm/
 
 ### F6 快捷命令
 
-- **Set Proxy (Windows)** - 为当前 PowerShell 会话设置临时代理（含大小写变量与 `NO_PROXY`）。
-- **Set Proxy (Linux)** - 为当前 Bash/Zsh 会话设置临时代理（含大小写变量与 `NO_PROXY`）。
-- **Set Proxy + dsh web** - 先按当前窗格环境（PowerShell 或 bash/WSL）设置临时代理，再在该环境启动 `dsh web`。
+- **Set Proxy** - 自动识别当前窗格环境，设置对应的临时代理（含大小写变量与 `NO_PROXY`）。判定规则：WSL 域、或前台进程为 bash/zsh/fish/wsl/ssh/docker/podman/kubectl 时用 bash 语法，其余按 PowerShell 处理。
+- **Set Proxy + dsh web** - 先按当前窗格环境设置临时代理，再在该环境启动 `dsh web`。
 
 ## 使用技巧
 
