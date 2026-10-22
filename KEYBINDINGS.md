@@ -149,7 +149,7 @@
    export https_proxy=http://127.0.0.1:2080
    ```
 
-2. **Set Proxy + dsh web** - 先用同一套规则设置临时代理，然后启动 `dsh web --port 0 --no-open`（端口随机以免与已运行实例冲突，不自动弹浏览器，URL 从终端输出里取）
+2. **Set Proxy + dsh web** - 先用同一套规则设置临时代理，然后启动 `dsh web --port 0 --no-open`（端口随机以免与已运行实例冲突，不自动弹浏览器，URL 从终端输出里取）。前台是 ssh/docker/podman/kubectl 时只设代理、不启动 `dsh web`，避免命令落到远端或容器里。
 
    ```powershell
    # PowerShell 窗格：设置大小写代理变量后执行 dsh web

@@ -32,6 +32,17 @@ local function is_unix_shell(pane)
    return false
 end
 
+-- 前台是 ssh/docker 等时，输入会落到远端/容器里，不该在那台机器上启动 dsh
+local function is_remote_pane(pane)
+   local name = (pane:get_foreground_process_name() or ''):lower()
+   for _, pattern in ipairs({ 'ssh', 'docker', 'podman', 'kubectl' }) do
+      if name:find(pattern, 1, true) then
+         return true
+      end
+   end
+   return false
+end
+
 local mod = {}
 
 if platform.is_mac then
@@ -73,7 +84,8 @@ local keys = {
                 -- 按当前窗格环境自动选择 PowerShell / bash 语法
                 pane:send_text(proxy_env(is_unix_shell(pane)) .. '\r')
                 -- dsh web 复用同一代理环境启动；--port 0 避开 3080 占用，--no-open 不弹浏览器
-                if id == 'dsh-web' then
+                -- 远端/容器窗格只设代理，dsh web 会落到那台机器上，故不启动
+                if id == 'dsh-web' and not is_remote_pane(pane) then
                    pane:send_text('dsh web --port 0 --no-open\r')
                 end
              end
