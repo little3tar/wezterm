@@ -149,16 +149,16 @@
    export https_proxy=http://127.0.0.1:2080
    ```
 
-2. **Set Proxy + dsh web** - 先用同一套规则设置临时代理，然后启动 `dsh web`
+2. **Set Proxy + dsh web** - 先用同一套规则设置临时代理，然后启动 `dsh web --port 0 --no-open`（端口随机以免与已运行实例冲突，不自动弹浏览器，URL 从终端输出里取）
 
    ```powershell
    # PowerShell 窗格：设置大小写代理变量后执行 dsh web
-   $env:http_proxy="http://127.0.0.1:2080"; dsh web
+   $env:http_proxy="http://127.0.0.1:2080"; dsh web --port 0 --no-open
    ```
 
    ```bash
    # bash/WSL 窗格：设置大小写代理变量后执行 dsh web
-   export http_proxy=http://127.0.0.1:2080; dsh web
+   export http_proxy=http://127.0.0.1:2080; dsh web --port 0 --no-open
    ```
 
 ## SSH 连接

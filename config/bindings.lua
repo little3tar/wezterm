@@ -72,9 +72,9 @@ local keys = {
              if id == 'proxy' or id == 'dsh-web' then
                 -- 按当前窗格环境自动选择 PowerShell / bash 语法
                 pane:send_text(proxy_env(is_unix_shell(pane)) .. '\r')
-                -- dsh web 复用同一代理环境启动
+                -- dsh web 复用同一代理环境启动；--port 0 避开 3080 占用，--no-open 不弹浏览器
                 if id == 'dsh-web' then
-                   pane:send_text('dsh web\r')
+                   pane:send_text('dsh web --port 0 --no-open\r')
                 end
              end
           end),
